@@ -356,7 +356,9 @@ class SocialAuthMiddleware implements MiddlewareInterface, EventDispatcherInterf
     {
         try {
             $provider = $this->_getService($request)->getProvider($providerName);
-            $accessToken = $provider->getAccessTokenByRequestParameters($request->getQueryParams());
+            $queryParams = $request->getQueryParams();
+            $data = !empty($queryParams) ? $queryParams : $request->getData();
+            $accessToken = $provider->getAccessTokenByRequestParameters($data);
             $identity = $provider->getIdentity($accessToken);
 
             if (!$identity->id) {
