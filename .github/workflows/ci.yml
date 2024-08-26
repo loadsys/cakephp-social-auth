@@ -97,6 +97,6 @@ jobs:
       if: always()
       run: psalm --output-format=github
 
-    - name: Run psalm
+    - name: Run phpstan
       if: always()
       run: phpstan analyse
