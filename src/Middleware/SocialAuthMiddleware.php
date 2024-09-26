@@ -376,6 +376,16 @@ class SocialAuthMiddleware implements MiddlewareInterface, EventDispatcherInterf
             return null;
         }
 
+        if (empty($identity->firstname) && !empty($data['user'])) {
+            $user = json_decode($data['user'], true);
+            if (!empty($user['name']['firstName'])) {
+                $identity->firstname = $user['name']['firstName'];
+            }
+            if (!empty($user['name']['lastName'])) {
+                $identity->lastname = $user['name']['lastName'];
+            }
+        }
+
         return ['identity' => $identity, 'access_token' => $accessToken];
     }
 
